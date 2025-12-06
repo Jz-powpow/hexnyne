@@ -44,7 +44,7 @@ body.home-theme {
   --cursor-hue: 180deg; 
 }
 
-body.hacker-theme {
+body.green-theme {
   --primary-gradient: from-green-500;
   --secondary-gradient: to-teal-600;
   --primary-color: #00ffc8; 
@@ -52,7 +52,7 @@ body.hacker-theme {
   --cursor-hue: 120deg; 
 }
 
-body.rain-theme {
+body.blue-theme {
   --primary-gradient: from-blue-800;
   --secondary-gradient: to-blue-600;
   --primary-color: #002efd; 
@@ -68,7 +68,7 @@ body.anime-theme {
   --cursor-hue: 0deg; 
 }
 
-body.car-theme {
+body.snow-theme {
   --primary-gradient: from-yellow-500;
   --secondary-gradient: to-yellow-300;
   --primary-color: #ffffff; 
@@ -82,7 +82,7 @@ body.car-theme {
 }
 
 
-#hacker-overlay {
+#green-overlay {
   mix-blend-mode: screen;
   opacity: 0.7;
 }
@@ -264,7 +264,7 @@ body.car-theme {
 }
 
 
-#home-theme, #hacker-theme, #rain-theme, #anime-theme, #car-theme, #results-theme {
+#home-theme, #green-theme, #blue-theme, #anime-theme, #snow-theme, #results-theme {
   background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
   touch-action: manipulation;
 }

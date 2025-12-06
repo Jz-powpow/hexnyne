@@ -24,22 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const profileBio = document.getElementById('profile-bio');
   const visitorCount = document.getElementById('visitor-count');
   const backgroundMusic = document.getElementById('background-music');
-  const hackerMusic = document.getElementById('hacker-music');
-  const rainMusic = document.getElementById('rain-music');
+  const greenMusic = document.getElementById('green-music');
+  const blueMusic = document.getElementById('blue-music');
   const animeMusic = document.getElementById('anime-music');
-  const carMusic = document.getElementById('car-music');
+  const snowMusic = document.getElementById('snow-music');
   const homeButton = document.getElementById('home-theme');
-  const hackerButton = document.getElementById('hacker-theme');
-  const rainButton = document.getElementById('rain-theme');
+  const greenButton = document.getElementById('green-theme');
+  const blueButton = document.getElementById('blue-theme');
   const animeButton = document.getElementById('anime-theme');
-  const carButton = document.getElementById('car-theme');
+  const snowButton = document.getElementById('snow-theme');
   const resultsButtonContainer = document.getElementById('results-button-container');
   const resultsButton = document.getElementById('results-theme');
   const volumeIcon = document.getElementById('volume-icon');
   const volumeSlider = document.getElementById('volume-slider');
   const transparencySlider = document.getElementById('transparency-slider');
   const backgroundVideo = document.getElementById('background');
-  const hackerOverlay = document.getElementById('hacker-overlay');
+  const greenOverlay = document.getElementById('green-overlay');
   const snowOverlay = document.getElementById('snow-overlay');
   const glitchOverlay = document.querySelector('.glitch-overlay');
   const profileBlock = document.getElementById('profile-block');
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function initializeVisitorCounter() {
     let totalVisitors = localStorage.getItem('totalVisitorCount');
     if (!totalVisitors) {
-      totalVisitors = 921234;
+      totalVisitors = 696969;
       localStorage.setItem('totalVisitorCount', totalVisitors);
     } else {
       totalVisitors = parseInt(totalVisitors);
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  const name = "HEXNYNE";
+  const name = "H E X N Y N E";
   let nameText = '';
   let nameIndex = 0;
   let isNameDeleting = false;
@@ -361,16 +361,16 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'home-theme':
         primaryColor = '#6c00f89f';
         break;
-      case 'hacker-theme':
+      case 'green-theme':
         primaryColor = '#22c5afe1';
         break;
-      case 'rain-theme':
+      case 'blue-theme':
         primaryColor = '#1E3A8A';
         break;
       case 'anime-theme':
         primaryColor = '#dc262698';
         break;
-      case 'car-theme':
+      case 'snow-theme':
         primaryColor = '#ffffffff';
         break;
       default:
@@ -394,10 +394,10 @@ document.addEventListener('DOMContentLoaded', () => {
         currentAudio.muted = isMuted;
         currentAudio.play().catch(err => console.error("Failed to play theme music:", err));
 
-        document.body.classList.remove('home-theme', 'hacker-theme', 'rain-theme', 'anime-theme', 'car-theme');
+        document.body.classList.remove('home-theme', 'green-theme', 'blue-theme', 'anime-theme', 'snow-theme');
         document.body.classList.add(themeClass);
 
-        hackerOverlay.classList.add('hidden');
+        greenOverlay.classList.add('hidden');
         snowOverlay.classList.add('hidden');
         profileBlock.style.zIndex = overlayOverProfile ? 10 : 20;
         skillsBlock.style.zIndex = overlayOverProfile ? 10 : 20;
@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
           overlay.classList.remove('hidden');
         }
 
-        if (themeClass === 'hacker-theme') {
+        if (themeClass === 'green-theme') {
           resultsButtonContainer.classList.remove('hidden');
         } else {
           resultsButtonContainer.classList.add('hidden');
@@ -438,20 +438,20 @@ document.addEventListener('DOMContentLoaded', () => {
     switchTheme('assets/background.mp4', backgroundMusic, 'home-theme');
   });
 
-  hackerButton.addEventListener('click', () => {
-    switchTheme('assets/hacker_background.mp4', hackerMusic, 'hacker-theme', hackerOverlay, false);
+  greenButton.addEventListener('click', () => {
+    switchTheme('assets/green_background.mp4', greenMusic, 'green-theme', greenOverlay, false);
   });
-  hackerButton.addEventListener('touchstart', (e) => {
+  greenButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    switchTheme('assets/hacker_background.mp4', hackerMusic, 'hacker-theme', hackerOverlay, false);
+    switchTheme('assets/green_background.mp4', greenMusic, 'green-theme', greenOverlay, false);
   });
 
-  rainButton.addEventListener('click', () => {
-    switchTheme('assets/rain_background.mov', rainMusic, 'rain-theme', snowOverlay, true);
+  blueButton.addEventListener('click', () => {
+    switchTheme('assets/blue_background.mov', blueMusic, 'blue-theme', snowOverlay, true);
   });
-  rainButton.addEventListener('touchstart', (e) => {
+  blueButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    switchTheme('assets/rain_background.mov', rainMusic, 'rain-theme', snowOverlay, true);
+    switchTheme('assets/blue_background.mov', blueMusic, 'blue-theme', snowOverlay, true);
   });
 
   animeButton.addEventListener('click', () => {
@@ -462,12 +462,12 @@ document.addEventListener('DOMContentLoaded', () => {
     switchTheme('assets/anime_background.mp4', animeMusic, 'anime-theme');
   });
 
-  carButton.addEventListener('click', () => {
-    switchTheme('assets/car_background.mp4', carMusic, 'car-theme');
+  snowButton.addEventListener('click', () => {
+    switchTheme('assets/snow_background.mp4', snowMusic, 'snow-theme');
   });
-  carButton.addEventListener('touchstart', (e) => {
+  snowButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    switchTheme('assets/car_background.mp4', carMusic, 'car-theme');
+    switchTheme('assets/snow_background.mp4', snowMusic, 'snow-theme');
   });
 
  
@@ -639,9 +639,9 @@ document.addEventListener('DOMContentLoaded', () => {
             { x: 100, opacity: 0 },
             { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
           );
-          gsap.to(pythonBar, { width: '87%', duration: 2, ease: 'power2.out' });
-          gsap.to(cppBar, { width: '75%', duration: 2, ease: 'power2.out' });
-          gsap.to(csharpBar, { width: '80%', duration: 2, ease: 'power2.out' });
+          gsap.to(pythonBar, { width: '69%', duration: 2, ease: 'power2.out' });
+          gsap.to(cppBar, { width: '69%', duration: 2, ease: 'power2.out' });
+          gsap.to(csharpBar, { width: '69%', duration: 2, ease: 'power2.out' });
         }
       });
       resultsHint.classList.remove('hidden');
