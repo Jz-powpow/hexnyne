@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const socialIcons = document.querySelectorAll('.social-icon');
   const badges = document.querySelectorAll('.badge');
 
-  // Live Discord presence (Lanyard)
+  
   const discordDisplayName = document.getElementById('discord-display-name');
   const discordUsername = document.getElementById('discord-username');
   const discordAvatar = document.getElementById('discord-avatar');
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       discordPresenceBadge.classList.remove('offline');
     }
 
-    // Prefer Spotify when available, otherwise show the first normal activity.
+    
     let activity = null;
     let label = '';
     let details = '';
@@ -371,7 +371,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const bioMessages = [
     "washed clean by the rain, and ready to start a new life.",
-    "\"Say hello to mis amigos of varying sizes! 🫦\""
+    "\ Say hello to mis amigos of varying sizes ✗♡✗♡\"
+    "Towards distant lands, it leads me by both hands."
   ];
   let bioText = '';
   let bioIndex = 0;
