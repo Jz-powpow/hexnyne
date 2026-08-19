@@ -666,6 +666,207 @@
         }
 
         
+
+        /* ===============================
+           Discord / Lanyard live presence
+           =============================== */
+        .discord-presence-card {
+            position: relative;
+            width: 100%;
+            min-height: 86px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(30, 30, 38, 0.78), rgba(8, 8, 12, 0.62));
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 8px 30px rgba(0,0,0,.18);
+            backdrop-filter: blur(12px);
+            overflow: hidden;
+            transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+        }
+
+        .discord-presence-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.035), transparent);
+            transform: translateX(-100%);
+            animation: discordShimmer 5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .discord-presence-card:hover {
+            transform: translateY(-2px);
+            border-color: color-mix(in srgb, var(--primary-color) 55%, white 12%);
+            box-shadow: 0 10px 35px rgba(0,0,0,.28), 0 0 20px color-mix(in srgb, var(--primary-color) 20%, transparent);
+        }
+
+        .discord-presence-avatar-link {
+            position: relative;
+            width: 58px;
+            height: 58px;
+            flex: 0 0 58px;
+            display: block;
+            border-radius: 50%;
+        }
+
+        .discord-presence-avatar {
+            width: 58px;
+            height: 58px;
+            display: block;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,.12);
+            box-shadow: 0 0 18px rgba(0,0,0,.35);
+        }
+
+        .discord-status-dot {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 17px;
+            height: 17px;
+            border: 3px solid #111217;
+            border-radius: 50%;
+            background: #747f8d;
+            transition: background .25s ease, box-shadow .25s ease;
+        }
+
+        .status-online { background: #23a559; box-shadow: 0 0 12px rgba(35,165,89,.75); }
+        .status-idle { background: #f0b232; box-shadow: 0 0 12px rgba(240,178,50,.65); }
+        .status-dnd { background: #f23f43; box-shadow: 0 0 12px rgba(242,63,67,.65); }
+        .status-offline { background: #747f8d; box-shadow: none; }
+
+        .discord-presence-main {
+            min-width: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            text-align: left;
+        }
+
+        .discord-presence-name-row {
+            display: flex;
+            align-items: baseline;
+            gap: 7px;
+            min-width: 0;
+            white-space: nowrap;
+        }
+
+        .discord-display-name {
+            max-width: 55%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .discord-username {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 11px;
+            color: rgba(255,255,255,.45);
+        }
+
+        .discord-status-text {
+            font-size: 11px;
+            color: rgba(255,255,255,.68);
+        }
+
+        .discord-activity {
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 3px;
+        }
+
+        .discord-activity-image {
+            width: 28px;
+            height: 28px;
+            flex: 0 0 28px;
+            border-radius: 6px;
+            object-fit: cover;
+            background: rgba(255,255,255,.08);
+        }
+
+        .discord-activity-text {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .discord-activity-label,
+        .discord-activity-details {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 9px;
+            color: rgba(255,255,255,.48);
+        }
+
+        .discord-activity-name {
+            font-size: 10px;
+        }
+
+        #discord-activity-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 10px;
+            color: rgba(255,255,255,.88);
+        }
+
+        .discord-presence-badge {
+            align-self: flex-start;
+            flex: 0 0 auto;
+            padding: 4px 7px;
+            border-radius: 999px;
+            background: rgba(35,165,89,.13);
+            border: 1px solid rgba(35,165,89,.28);
+            color: #57f287;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: .8px;
+        }
+
+        .discord-presence-badge.offline {
+            background: rgba(116,127,141,.12);
+            border-color: rgba(116,127,141,.22);
+            color: rgba(255,255,255,.52);
+        }
+
+        @keyframes discordShimmer {
+            0%, 55%, 100% { transform: translateX(-100%); }
+            70%, 85% { transform: translateX(100%); }
+        }
+
+        @media (max-width: 430px) {
+            .discord-presence-card {
+                min-height: 76px;
+                padding: 9px 10px;
+                gap: 10px;
+            }
+            .discord-presence-avatar-link,
+            .discord-presence-avatar {
+                width: 48px;
+                height: 48px;
+                flex-basis: 48px;
+            }
+            .discord-status-dot { width: 15px; height: 15px; }
+            .discord-display-name { font-size: 13px; }
+            .discord-username { font-size: 9px; }
+            .discord-status-text { font-size: 10px; }
+            .discord-presence-badge { font-size: 7px; padding: 3px 5px; }
+        }
+
         @media (max-width: 430px) {
             
             #profile-block, #skills-block {
@@ -912,6 +1113,30 @@
                     </div>
                     <div id="profile-bio"></div>
                 </div>
+            </div>
+
+            <!-- Live Discord / Lanyard presence -->
+            <div id="discord-presence" class="discord-presence-card" aria-live="polite">
+                <a id="discord-presence-link" class="discord-presence-avatar-link" href="https://discord.com/users/961524318897061888" target="_blank" rel="noopener noreferrer" aria-label="Open Discord profile">
+                    <img id="discord-avatar" class="discord-presence-avatar" src="https://api.lanyard.rest/961524318897061888.png" alt="Discord avatar">
+                    <span id="discord-status-dot" class="discord-status-dot status-offline"></span>
+                </a>
+                <div class="discord-presence-main">
+                    <div class="discord-presence-name-row">
+                        <span id="discord-display-name" class="discord-display-name">Discord</span>
+                        <span id="discord-username" class="discord-username">@loading...</span>
+                    </div>
+                    <div id="discord-status-text" class="discord-status-text">Connecting to Discord...</div>
+                    <div id="discord-activity" class="discord-activity hidden">
+                        <img id="discord-activity-image" class="discord-activity-image" alt="">
+                        <div class="discord-activity-text">
+                            <span id="discord-activity-label" class="discord-activity-label"></span>
+                            <strong id="discord-activity-name"></strong>
+                            <span id="discord-activity-details"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="discord-presence-badge" class="discord-presence-badge">LIVE</div>
             </div>
 
             <div class="bio-separator"></div>
