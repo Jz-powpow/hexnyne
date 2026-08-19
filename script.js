@@ -53,6 +53,140 @@ document.addEventListener('DOMContentLoaded', () => {
   const socialIcons = document.querySelectorAll('.social-icon');
   const badges = document.querySelectorAll('.badge');
 
+  // Live Discord presence (Lanyard)
+  const discordDisplayName = document.getElementById('discord-display-name');
+  const discordUsername = document.getElementById('discord-username');
+  const discordAvatar = document.getElementById('discord-avatar');
+  const discordStatusDot = document.getElementById('discord-status-dot');
+  const discordStatusText = document.getElementById('discord-status-text');
+  const discordActivity = document.getElementById('discord-activity');
+  const discordActivityImage = document.getElementById('discord-activity-image');
+  const discordActivityLabel = document.getElementById('discord-activity-label');
+  const discordActivityName = document.getElementById('discord-activity-name');
+  const discordActivityDetails = document.getElementById('discord-activity-details');
+  const discordPresenceBadge = document.getElementById('discord-presence-badge');
+
+  const DISCORD_ID = '961524318897061888';
+  const LANYARD_ENDPOINT = `https://api.lanyard.rest/v1/users/${DISCORD_ID}`;
+  const DISCORD_AVATAR_FALLBACK = `https://api.lanyard.rest/${DISCORD_ID}.png`;
+
+  function getStatusLabel(status) {
+    switch (status) {
+      case 'online': return 'Online';
+      case 'idle': return 'Idle';
+      case 'dnd': return 'Do Not Disturb';
+      default: return 'Offline';
+    }
+  }
+
+  function getActivityImage(activity) {
+    if (!activity) return '';
+
+    if (activity.assets?.large_image) {
+      const image = activity.assets.large_image;
+      if (image.startsWith('mp:')) {
+        return `https://media.discordapp.net/${image.slice(3)}`;
+      }
+      return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${image}.png`;
+    }
+
+    return '';
+  }
+
+  function updateDiscordPresence(data) {
+    if (!discordDisplayName || !discordAvatar) return;
+
+    if (!data || !data.success || !data.data) {
+      discordDisplayName.textContent = 'Discord';
+      discordUsername.textContent = '@not available';
+      discordStatusText.textContent = 'Join the Lanyard server to enable live presence.';
+      discordStatusDot.className = 'discord-status-dot status-offline';
+      discordPresenceBadge.textContent = 'OFFLINE';
+      discordPresenceBadge.classList.add('offline');
+      discordActivity.classList.add('hidden');
+      discordAvatar.src = DISCORD_AVATAR_FALLBACK;
+      return;
+    }
+
+    const presence = data.data;
+    const user = presence.discord_user || {};
+    const displayName = user.global_name || user.display_name || user.username || 'Discord';
+    const username = user.username ? `@${user.username}` : '@unknown';
+
+    discordDisplayName.textContent = displayName;
+    discordUsername.textContent = username;
+    discordStatusText.textContent = getStatusLabel(presence.discord_status);
+    discordStatusDot.className = `discord-status-dot status-${presence.discord_status || 'offline'}`;
+
+    if (user.id && user.avatar) {
+      const extension = user.avatar.startsWith('a_') ? 'gif' : 'png';
+      discordAvatar.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${extension}?size=128`;
+    } else {
+      discordAvatar.src = DISCORD_AVATAR_FALLBACK;
+    }
+
+    if (presence.discord_status === 'offline') {
+      discordPresenceBadge.textContent = 'OFFLINE';
+      discordPresenceBadge.classList.add('offline');
+    } else {
+      discordPresenceBadge.textContent = 'LIVE';
+      discordPresenceBadge.classList.remove('offline');
+    }
+
+    // Prefer Spotify when available, otherwise show the first normal activity.
+    let activity = null;
+    let label = '';
+    let details = '';
+
+    if (presence.listening_to_spotify && presence.spotify) {
+      activity = {
+        assets: { large_image: null },
+        name: presence.spotify.song,
+        details: presence.spotify.artist,
+        spotify: true
+      };
+      label = 'Listening to Spotify';
+      details = presence.spotify.artist || '';
+      discordActivityImage.src = presence.spotify.album_art_url || '';
+    } else {
+      discordActivityImage.removeAttribute('src');
+      activity = (presence.activities || []).find(a => a.type !== 4) || (presence.activities || [])[0];
+      if (activity) {
+        const typeLabels = { 0: 'Playing', 1: 'Streaming', 2: 'Listening to', 3: 'Watching', 5: 'Competing in' };
+        label = typeLabels[activity.type] || 'Activity';
+        details = activity.details || activity.state || '';
+        const imageUrl = getActivityImage(activity);
+        if (imageUrl) discordActivityImage.src = imageUrl;
+      }
+    }
+
+    if (activity) {
+      discordActivity.classList.remove('hidden');
+      discordActivityLabel.textContent = label;
+      discordActivityName.textContent = activity.name || 'Activity';
+      discordActivityDetails.textContent = details;
+      discordActivityImage.style.display = discordActivityImage.src ? 'block' : 'none';
+    } else {
+      discordActivity.classList.add('hidden');
+      discordActivityImage.removeAttribute('src');
+    }
+  }
+
+  async function loadDiscordPresence() {
+    try {
+      const response = await fetch(`${LANYARD_ENDPOINT}?t=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Lanyard HTTP ${response.status}`);
+      const data = await response.json();
+      updateDiscordPresence(data);
+    } catch (error) {
+      console.warn('Discord presence unavailable:', error);
+      updateDiscordPresence(null);
+    }
+  }
+
+  loadDiscordPresence();
+  setInterval(loadDiscordPresence, 15000);
+
   
   const cursor = document.querySelector('.custom-cursor');
   const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
@@ -119,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function initializeVisitorCounter() {
     let totalVisitors = localStorage.getItem('totalVisitorCount');
     if (!totalVisitors) {
-      totalVisitors = 68;
+      totalVisitors = 696969;
       localStorage.setItem('totalVisitorCount', totalVisitors);
     } else {
       totalVisitors = parseInt(totalVisitors);
@@ -668,6 +802,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   typeWriterStart();
-
 });
-
