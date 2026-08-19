@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const bioMessages = [
     "washed clean by the rain, and ready to start a new life.",
-    "\ Say hello to mis amigos of varying sizes ✗♡✗♡\"
+    "\"Say hello to mis amigos of varying sizes ✗♡✗♡\""
   ];
   let bioText = '';
   let bioIndex = 0;
