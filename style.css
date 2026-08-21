@@ -774,7 +774,7 @@ body.snow-theme {
   }
 }
 
-/* Live Discord / Lanyard presence card */
+
 .discord-presence-card {
   position: relative; width: 100%; min-height: 86px; display: flex; align-items: center; gap: 13px;
   padding: 10px 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 14px;
